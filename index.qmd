@@ -1,0 +1,9 @@
+---
+title: "Matplotlib 기초"
+---
+
+PNU에서 진행된 공학작문에 사용된 Matplotlib 관련 기초 Hands-On 입니다. 조금 더 전문적인 Hands-On이 필요하시면 Matplotlib에서 제공하는 튜토리얼[^1]을 확인하세요.
+
+[^1]: https://matplotlib.org/stable/tutorials/index
+
+주된 내용은 Seaborn 등과 같은 응용 라이브러리를 사용하기전에 알아두면 좋을 내용입니다. 실습은 Google Colab을 활용하시면 손쉽게 가능합니다.

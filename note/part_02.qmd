@@ -1,0 +1,93 @@
+---
+title: "Axis Attributes"
+author: "Sangkon Han"
+jupyter: python3
+execute:
+    eval: false
+---
+
+## Axis Aspect and Limits
+
+기본적으로 (0,0)과 (1,1) 사이의 정사각형 영역을 그리는 것을 볼 수 있습니다. 하지만 가로세로비가 1이 아닙니다. 가로세로비는 높이와 너비의 비율인데, set_aspect()를 사용하여 변경할 수 있습니다.
+
+```{python}
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+import numpy as np
+import pandas as pd
+
+fig, ax = plt.figure(), plt.axes()
+# ax.set_aspect(1)
+```
+
+set_xlim() 및 set_ylim()을 사용하여 최소값과 최대값을 설정할 수 있습니다. 만약, 최소/최대값을 명시적으로 설정하지 않으면 데이터에 따라 최대/최소값을 설정합니다. 당연히 해당 값은 get_xlim() 및 get_ylim() 메서드를 사용하여 확인할 수 있습니다. 최대/최소값에 따라서 차트 요소가 잘립니다. 설정을 통해서 차트 요소를 출력할 수 있지만, 권장하진 않습니다.
+
+```{python}
+fig, ax = plt.figure(), plt.axes()
+ax.set_aspect(1)
+
+u = np.linspace(0,2*np.pi,100)
+x = np.cos(u)
+y = np.sin(u)
+
+ax.plot(x-1, y)
+
+ax.plot(x+1, y, clip_on = False)
+
+ax.set_xlim(-1,1)
+```
+
+## Axis Lines and Spines
+
+기본적으로 차트를 둘러싸인 선을 스파인(spines)이라고 합니다. 플롯에서와 같이 y=0 및 x=0의 일반적인 x축 및 y축 선에 익숙한 경우 기본값이 어색할 수도 있습니다. 
+
+```{python}
+fig, ax = plt.figure(), plt.axes()
+ax.set_title("Zero Spines and Arrows")
+ax.plot([-1,1], [-1,1])
+
+for spine in 'top',  'right':
+    ax.spines[spine].set_visible(False)
+
+for spine in 'bottom',  'left':
+    ax.spines[spine].set_position('zero')
+
+xlims = ax.get_xlim()
+ylims = ax.get_ylim()
+
+ax.plot(xlims[1], 0, ">k", clip_on = False)
+ax.plot(0, ylims[1], "^k", clip_on = False)
+
+ax.set_xlim(xlims)
+ax.set_ylim(ylims)
+```
+
+## Ticks
+
+눈금(tick)에 중요한 ax 메서드는 set_xticks, set_xticklabels 등을 활용할 수 있습니다.
+
+```{python}
+fig, ax = plt.figure(), plt.axes()
+x = np.arange(10, 30, 1)
+y = np.random.normal(size = len(x))
+ax.plot(x,y)
+
+ax.xaxis.set_ticks(x)
+
+# ax.yaxis.tick_right()
+# ax.xaxis.set_ticks_position('top')
+
+ax.set_title("Plot #5")
+```
+
+## Grids
+
+플롯에 격자선을 포함하는 것은 일반적으로 권장하지 않습니다. 격자선과 눈금의 위치는 set_major_locator() 및 set_minor_locator() 메서드로 설정할 수 있습니다.
+
+```{python}
+fig, ax = plt.figure(), plt.axes()
+ax.xaxis.grid(False)
+ax.yaxis.grid(True, linewidth = 3)
+ax.yaxis.grid(True, which = 'minor', linewidth = 0.5)
+ax.yaxis.set_minor_locator(mpl.ticker.MultipleLocator(.1))
+```
